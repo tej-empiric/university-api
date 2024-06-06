@@ -2,7 +2,7 @@ from rest_framework import serializers
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from .models import CustomUser
+from .models import CustomUser, Application
 
 
 class RegisterSerializer(serializers.ModelSerializer):
@@ -16,6 +16,7 @@ class RegisterSerializer(serializers.ModelSerializer):
             "email",
             "password",
             "role",
+            "classroom",
         ]
 
     def create(self, validated_data):
@@ -25,6 +26,7 @@ class RegisterSerializer(serializers.ModelSerializer):
             email=validated_data.get("email"),
             password=validated_data["password"],
             role=validated_data.get("role"),
+            classroom=validated_data.get("classroom"),
         )
         return user
 
@@ -58,5 +60,39 @@ class LoginSerializer(TokenObtainPairSerializer):
                 "last_name": user.last_name,
                 "email": user.email,
                 "role": user.role,
+                "classroom": user.classroom,
             },
         }
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = [
+            "id",
+            "first_name",
+            "last_name",
+            "email",
+            "password",
+            "role",
+            "classroom",
+        ]
+
+
+class ApplicationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Application
+        fields = [
+            "id",
+            "name",
+            "user",
+            "university",
+            "program",
+            "classroom",
+            "study_mode",
+            "start_date",
+            "end_date",
+            "leave_reason",
+            "status",
+        ]
+        read_only_fields = ("user",)
