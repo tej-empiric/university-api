@@ -100,7 +100,7 @@ class UserView(generics.ListAPIView):
                 {"detail": "You do not have permission to perform this action."},
                 status=status.HTTP_403_FORBIDDEN,
             )
-
+ 
 
 class ClassroomAssignView(generics.RetrieveUpdateAPIView):
     queryset = CustomUser.objects.all()
@@ -120,3 +120,5 @@ class ClassroomAssignView(generics.RetrieveUpdateAPIView):
                 {"detail": "You do not have permission to perform this action."},
                 status=status.HTTP_403_FORBIDDEN,
             )
+
+
